@@ -51,17 +51,13 @@ if (clientID>-1)
     [returnCodeR,detectionStateR,distanceRight,~,~]=vrep.simxReadProximitySensor(clientID,right_Sensor,vrep.simx_opmode_streaming);
     
     % Drive straight to the wall until wall found
-    %while (norm(distanceFront)*frontCorrection >= setPoint & detectionStateF==1) | detectionStateF==0;  %AND is needed to make sure we detected something
+    while (norm(distanceFront)*frontCorrection >= setPoint & detectionStateF==1) | detectionStateF==0;  %AND is needed to make sure we detected something
         % Start Driving straight
-        %[returnCode]=vrep.simxSetJointTargetVelocity(clientID, left_Motor, wheelSpeed ,vrep.simx_opmode_blocking);
-        %[returnCode]=vrep.simxSetJointTargetVelocity(clientID, right_Motor, wheelSpeed ,vrep.simx_opmode_blocking);
+        [returnCode]=vrep.simxSetJointTargetVelocity(clientID, left_Motor, wheelSpeed ,vrep.simx_opmode_blocking);
+        [returnCode]=vrep.simxSetJointTargetVelocity(clientID, right_Motor, wheelSpeed ,vrep.simx_opmode_blocking);
         % Ping Front Sonar
-        %[returnCodeF,detectionStateF,distanceFront,~,~]=vrep.simxReadProximitySensor(clientID,front_Sensor,vrep.simx_opmode_buffer);
-    %end  
-    
-    % Stop in front of the wall 
-    [returnCode]=vrep.simxSetJointTargetVelocity(clientID, right_Motor, 0 ,vrep.simx_opmode_blocking);
-    [returnCode]=vrep.simxSetJointTargetVelocity(clientID, left_Motor, 0 ,vrep.simx_opmode_blocking);
+        [returnCodeF,detectionStateF,distanceFront,~,~]=vrep.simxReadProximitySensor(clientID,front_Sensor,vrep.simx_opmode_buffer);
+    end  
 
     %%%%%%%%%%%%%%%%%%%%% BEGIN - PID CONTROL IMPLEMENTATION %%%%%%%%%%%%%%%%%%%%%%%%%    
     for i=1:endTime

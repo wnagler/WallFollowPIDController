@@ -32,10 +32,6 @@ error = 0;                  %Current Error
 prevError = 0;              %Previous Error
 intError = 0;               %Cumulative Error (eg. Integral)
 
-arraySetpoint=[];
-arrayDistance=[];
-arrayError=[];
-
 if (clientID>-1)
     % If connection successful
     disp('Connected')
@@ -125,10 +121,6 @@ if (clientID>-1)
             [returnCode]=vrep.simxSetJointTargetVelocity(clientID, right_Motor, 0 ,vrep.simx_opmode_blocking);
          
         end
-        
-        arraySetpoint(i)=setPoint;
-        arrayDistance(i)=norm(distanceRight);
-        arrayError(i)=error;
     end  
     
     [returnCode]=vrep.simxSetJointTargetVelocity(clientID, right_Motor, 0 ,vrep.simx_opmode_blocking);
